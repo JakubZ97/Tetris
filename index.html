@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <table id="gameBoard">
+            <tbody></tbody>
+            <div id="gameOver"><h3>GAME<br>OVER</h3></div>
+        </table>
+        <div id="content">
+            <div id="upperPanel">
+                <h2>SCORE<p id="score">0</p></h2>
+                <h2>LEVEL<p id="level">0</p></h2>
+            </div>
+            <div id="middlePanel">
+                <h2>NEXT</h2>
+                <div class="tableHolder">
+                    <table class="sidePieces" id="nextPiece"></table>
+                </div>
+                <h2>HOLD</h2>
+                <div class="tableHolder">
+                    <table class="sidePieces" id="holdPiece"></table>
+                </div>
+            </div>
+            <div id="lowerPanel">
+                <button onclick="Starting.startGame()" id="newGame">New game</button>
+            </div>
+        </div>    
+        <script src="main.js"></script>
+    </body>
+</html>
