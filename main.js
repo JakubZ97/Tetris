@@ -1,3 +1,4 @@
+'use strict'
 const Pieces = {
     o: {
         rotations: [[[2,2],
@@ -153,6 +154,7 @@ const Starting = {
         Game.timer = false;
         Game.createPiece();
         Game.updateLevelAndScore();
+        document.getElementById('gameOver').style.height = 0 +'px'
     }
 }
 
@@ -210,18 +212,17 @@ const Game = {
             this.gameSpeed()
         } else {
             document.getElementById('gameOver').style.height = 640 + 'px'
-            console.log('game over')
         }
     },
 
     generatePieceInSideBar(destination, squares){
-        table = document.querySelector(destination);
+        let table = document.querySelector(destination);
         table.innerHTML = '';
         for(let r = 0; r < squares.piece.rotations[0].length; r++){
-            tr = document.createElement('tr');
+            let tr = document.createElement('tr');
             table.appendChild(tr);
             for(let i = 0; i < squares.piece.rotations[0][r].length; i++){
-                td = document.createElement('td');
+                let td = document.createElement('td');
                 tr.appendChild(td);
                 if(squares.piece.rotations[0][r][i] == 2){
                     td.style.backgroundColor = Colors[squares.piece.name];
@@ -354,46 +355,55 @@ const Game = {
     },
 
     rowsToClear(){
-        toClear = [];
+        let toClear = [];
         clearInterval(this.timer)
         for (let row = 0; row < 20; row++){
             if(!Starting.gameBoardArray[row].includes(0)){
-                toClear.push(row);
+                toClear.unshift(row);
             }
         }
-        console.log(toClear.length == 0)
         if(toClear.length == 0){
             this.createPiece();
         } else {
             this.indicateAnimation(toClear)
             setTimeout(() => {
-                this.deleteRows()
+                this.deleteRows(toClear)
             }, 300);
         }
     },
 
-    deleteRows(){
-        let tr = document.querySelectorAll('tr');
-        let table = document.querySelector('tbody');
+    deleteRows(rowsToClear){
+        Current = {}
+        clearInterval(this.timer);
         let linesRemoved= 0;
-        toClear.forEach(row =>{
-            let createTr = document.createElement('tr');
+        let tr = document.querySelectorAll('tr');
+        rowsToClear.forEach(row =>{
             tr[row].remove();
             Starting.gameBoardArray.splice(row, 1);
-            Starting.gameBoardArray.unshift([0,0,0,0,0,0,0,0,0,0])
-            table.insertBefore(createTr, tr[0]);
             this.linesCleared++;
             linesRemoved++;
-            if(this.linesCleared > Levels[this.level + 1].cleared){
-                this.level++
-            }
+        })
+        this.score += Points[linesRemoved] * this.level;
+        if(this.linesCleared > Levels[this.level + 1].cleared){
+            this.level++
+        }
+        this.fillTable();
+    },
+
+    fillTable(){
+        let tr = document.querySelectorAll('tr');
+        let table = document.querySelector('tbody');
+
+        while(Starting.gameBoardArray.length < 20){
+            let createTr = document.createElement('tr');
+            table.insertBefore(createTr, tr[0]);
+            Starting.gameBoardArray.unshift([0,0,0,0,0,0,0,0,0,0])
             for( let i = 0; i < 10; i++){
                 let createTd = document.createElement('td');
                 createTr.appendChild(createTd);
             }
-            })
-            console.log(linesRemoved)
-        this.score += Points[linesRemoved] * this.level;
+        }
+
         for (let r = 0, row; row = table.rows[r]; r++){
             row.id = r
             for (let i = 0, cell; cell = row.cells[i]; i++){
@@ -484,7 +494,7 @@ let Next = {}
 let Hold = {}
 
 function checkKey(key){
-    console.log(key.keyCode);
+    //console.log(key.keyCode);
     if (key.keyCode == 32) {
         Game.sonicDrop();
     }
@@ -506,6 +516,4 @@ function checkKey(key){
     key.preventDefault()
 };
 window.onload = Starting.createGameBoard();
-//document.getElementById('startNewGame').addEventListener('click', Starting.startGame())
-//document.onkeydown = checkKey;
 document.addEventListener('keydown', checkKey)
