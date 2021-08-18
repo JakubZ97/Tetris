@@ -2,7 +2,7 @@
 A clone of tetris, written in vanilla JS, CSS and HTML.  
 Only playable on PC.  
 Key binding:  
-<kbd>←</kbd>/<kbd>→</kbd> -  
-<kbd>↑</kbd> -  
-<kbd>↓</kbd> -  
-<kbd>space bar</kbd> -  
+<kbd>←</kbd>/<kbd>→</kbd> - moves block horizontally  
+<kbd>↑</kbd> - rotate    
+<kbd>↓</kbd> - soft drop  
+<kbd>space bar</kbd> - hard drop
