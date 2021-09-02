@@ -7,5 +7,6 @@ Key binding:
 <kbd>↑</kbd> - rotate    
 <kbd>↓</kbd> - soft drop  
 <kbd>space bar</kbd> - hard drop  
+<kbd>c</kbd> - hold piece  
   
 You can try it [here](https://jakubz97.github.io/Tetris/).
