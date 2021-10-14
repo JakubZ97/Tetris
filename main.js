@@ -155,6 +155,7 @@ const Starting = {
         Game.createPiece();
         Game.updateLevelAndScore();
         document.getElementById('gameOver').style.height = 0 +'px'
+        document.getElementById('holdPiece').innerHTML = ''
     }
 }
 
